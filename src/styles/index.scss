@@ -1,0 +1,26 @@
+@import "./reset";
+@import "./mixin";
+@import "./variable";
+.login-page {
+  @include flex(column, center, center);
+  background : {
+    image: url("https://newfemme.co/img_resize/artikel/2216/1520/manfaat-dan-panduan-membuat-to-do-list-sehari-hari");
+    repeat: no-repeat;
+    size: cover;
+    color: $opacity;
+    blend-mode: overlay;
+  }
+  width: 100vw;
+  height: 100vh;
+  &__btn {
+    color: $white;
+    font-size: 18px;
+    letter-spacing: 4px;
+    background-color: $black;
+    padding: 14px 20px;
+    transition: all ease 0.3s;
+    &:hover {
+      background-color: $quiteBlack;
+    }
+  }
+}
