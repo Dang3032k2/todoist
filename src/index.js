@@ -5,7 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import Authorization from "./auth/Authorization";
+import Task from "./pages/Task";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,7 +14,8 @@ root.render(
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/authorization" element={<Authorization />} />
+        <Route path="/newtask" element={<Task />} />
+        <Route path="/edittask/:id" element={<Task />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

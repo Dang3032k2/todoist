@@ -4,3 +4,19 @@
   justify-content: $justifyContent;
   align-items: $alignItems;
 }
+
+@mixin size($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin color-border($color, $border, $radius) {
+  color: $color;
+  border: $border;
+  border-radius: $radius;
+}
+
+@mixin table-row($border-b) {
+  border-bottom: $border-b;
+  padding: 16px 0;
+}
