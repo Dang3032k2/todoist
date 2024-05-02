@@ -1,40 +1,59 @@
 import { useState } from "react";
 import { db } from "../utils/firebaseConfig";
-import { collection, getDocs, query, where } from "firebase/firestore/lite";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore/lite";
 import { Link, useNavigate } from "react-router-dom";
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
   });
+  const isMissing = !formData.name || !formData.email || !formData.password;
   const handleChangeForm = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isMissing) {
+      alert("Vui lòng nhập đầy đủ thông tin!");
+      return;
+    }
     const q = query(
       collection(db, "user"),
-      where("email", "==", formData.email),
-      where("password", "==", formData.password)
+      where("email", "==", formData.email)
     );
 
     const querySnapshot = await getDocs(q);
     if (querySnapshot.size) {
-      localStorage.setItem(
-        "todouser",
-        JSON.stringify({ userId: querySnapshot.docs[0].id })
+      alert(
+        "Email đã tồn tại! Vui lòng sử dụng email khác hoặc chuyển đến đăng nhập"
       );
-    } else {
-      alert("Sai tài khoản hoặc mật khẩu");
+      return;
     }
-    navigate("/");
+    await addDoc(collection(db, "user"), formData);
+    navigate("/login");
   };
 
   return (
     <div className="login-page">
       <form className="login-page__form" onSubmit={handleSubmit}>
         <div className="form-content">
+          <div className="form-content__field">
+            <label for="name">Tên</label>
+            <input
+              id="name"
+              className="form-content__inp"
+              value={formData.name}
+              onChange={handleChangeForm}
+            />
+          </div>
           <div className="form-content__field">
             <label for="email">Email</label>
             <input
@@ -45,7 +64,7 @@ const Login = () => {
             />
           </div>
           <div className="form-content__field">
-            <label for="password">Password</label>
+            <label for="password">Mật khẩu</label>
             <input
               id="password"
               type="password"
@@ -55,13 +74,13 @@ const Login = () => {
             />
           </div>
           <button className="btn btn--login" type="submit">
-            ĐĂNG NHẬP
+            ĐĂNG KÝ
           </button>
-          <span>Chưa có tài khoản? </span>
-          <Link to={"/register"}>Đăng ký</Link>
+          <span>Đã có tài khoản? </span>
+          <Link to={"/login"}>Đăng nhập</Link>
         </div>
       </form>
     </div>
   );
 };
-export default Login;
+export default Register;

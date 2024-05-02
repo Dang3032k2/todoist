@@ -20,7 +20,7 @@
 }
 .form-content {
   width: 80%;
-  padding: 5% 0 10% 0;
+  padding: 6% 0 10% 0;
   &__field {
     @include flex(column, unset, start);
     margin-bottom: 5%;
@@ -50,6 +50,9 @@
     padding-bottom: 6%;
     text-align: center;
   }
+  &__btn {
+    @include flex(row, space-between, unset);
+  }
 }
 .btn {
   padding: 6px 10px;
@@ -62,6 +65,7 @@
     margin-top: 4%;
     width: 100%;
     background-color: $black;
+    margin-bottom: 10px;
   }
   &--add {
     @include color-border($green, 2px solid $green, 6px);
@@ -69,6 +73,9 @@
   &--cancel {
     @include color-border($red, 2px solid $red, 6px);
     margin-right: 20px;
+  }
+  &--logout {
+    @include color-border($black, 2px solid $black, 6px);
   }
 }
 .task-table {
@@ -139,6 +146,10 @@
 .empty-list {
   text-align: center;
   font-size: 20px;
-  color: $lightGray;
+  color: $gray;
+  &__img {
+    filter: opacity(0.4);
+    margin-top: 30px;
+  }
 }
 @import "./resopnsive";

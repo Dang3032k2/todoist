@@ -20,6 +20,7 @@ const TaskList = () => {
   const [deleteTask, setDeleteTask] = useState(false);
   const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [deletedTaskID, setIsDeletedTaskID] = useState(null);
+  const isEmpty = tasks.length === 0;
   useEffect(() => {
     const getTasks = async () => {
       const data = [];
@@ -60,8 +61,18 @@ const TaskList = () => {
           onCancel={() => setIsShowConfirm(false)}
         />
       )}
-      {!tasks.length && <p className="empty-list">Bạn chưa có task nào</p>}
-      {tasks.length && (
+      {isEmpty && (
+        <div className="empty-list">
+          <p>Bạn chưa có task nào</p>
+          <img
+            src="../../assets/empty-image.png"
+            alt="empty task list"
+            className="empty-list__img"
+          />
+        </div>
+      )}
+
+      {!isEmpty && (
         <ul>
           {tasks.map((task) => {
             const taskData = task.data;
