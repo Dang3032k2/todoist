@@ -10,8 +10,5 @@ const TimestampToDate = ({ seconds, nanoseconds }, type) => {
       : dayjs(date).format("YYYY-MM-DDTHH:mm:ss");
   return formattedDate;
 };
-const DateToTimeStamp = (date) => {
-  const timestamp = Timestamp.fromDate(date);
-  return timestamp;
-};
+const DateToTimeStamp = (date) => Timestamp.fromDate(date);
 export { TimestampToDate, DateToTimeStamp };

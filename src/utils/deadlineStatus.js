@@ -7,7 +7,9 @@ const DeadlineStatus = (datestr) => {
   if (diffInDays <= 0) {
     return "task-expired";
   }
-  if (diffInDays <= 24 * 60 * 60 * 1000) return "task-urgent";
+  if (diffInDays <= 24 * 60 * 60 * 1000) {
+    return "task-urgent";
+  }
   return "task-upcoming";
 };
 export default DeadlineStatus;

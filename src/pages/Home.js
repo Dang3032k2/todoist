@@ -1,21 +1,16 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TaskList from "../components/TaskList";
+import PATHS from "../utils/constants";
+import { removeLocalStorageItem } from "../utils/handleLocalStorage";
 
 const Home = () => {
   const navigate = useNavigate();
-  const isLogin = Boolean(localStorage.getItem("todouser"));
-  useEffect(() => {
-    if (!isLogin) {
-      navigate("/login");
-    }
-  }, []);
   const handleAdd = () => {
-    navigate("/newtask");
+    navigate(PATHS.addTask);
   };
   const handleLogout = () => {
-    localStorage.removeItem("todouser");
-    navigate("/login");
+    removeLocalStorageItem("todouser");
+    navigate(PATHS.login);
   };
   return (
     <div className="home-page">

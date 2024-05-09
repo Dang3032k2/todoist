@@ -1,34 +1,30 @@
-import { useState } from "react";
-import { db } from "../utils/firebaseConfig";
 import { collection, getDocs, query, where } from "firebase/firestore/lite";
 import { Link, useNavigate } from "react-router-dom";
+import PATHS from "../utils/constants";
+import { db } from "../utils/firebaseConfig";
+import { setLocalStorageItem } from "../utils/handleLocalStorage";
 const Login = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const handleChangeForm = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const email = e.target.elements.email.value;
+    const password = e.target.elements.password.value;
     const q = query(
       collection(db, "user"),
-      where("email", "==", formData.email),
-      where("password", "==", formData.password)
+      where("email", "==", email),
+      where("password", "==", password)
     );
 
     const querySnapshot = await getDocs(q);
     if (querySnapshot.size) {
-      localStorage.setItem(
-        "todouser",
-        JSON.stringify({ userId: querySnapshot.docs[0].id })
-      );
+      setLocalStorageItem("todouser", {
+        userId: querySnapshot.docs[0].id,
+      });
+
+      navigate(PATHS.home);
     } else {
       alert("Sai tài khoản hoặc mật khẩu");
     }
-    navigate("/");
   };
 
   return (
@@ -37,12 +33,7 @@ const Login = () => {
         <div className="form-content">
           <div className="form-content__field">
             <label for="email">Email</label>
-            <input
-              id="email"
-              className="form-content__inp"
-              value={formData.email}
-              onChange={handleChangeForm}
-            />
+            <input id="email" type="email" className="form-content__inp" />
           </div>
           <div className="form-content__field">
             <label for="password">Password</label>
@@ -50,15 +41,13 @@ const Login = () => {
               id="password"
               type="password"
               className="form-content__inp"
-              value={formData.password}
-              onChange={handleChangeForm}
             />
           </div>
           <button className="btn btn--login" type="submit">
             ĐĂNG NHẬP
           </button>
           <span>Chưa có tài khoản? </span>
-          <Link to={"/register"}>Đăng ký</Link>
+          <Link to={PATHS.register}>Đăng ký</Link>
         </div>
       </form>
     </div>

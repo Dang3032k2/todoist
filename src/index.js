@@ -1,25 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./styles/index.scss";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
-import Task from "./pages/Task";
-import Register from "./pages/Register";
-
+import Router from "./routes";
+import "./styles/index.scss";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/newtask" element={<Task />} />
-        <Route path="/edittask/:id" element={<Task />} />
-      </Routes>
-    </BrowserRouter>
+    <Router />
   </React.StrictMode>
 );
 

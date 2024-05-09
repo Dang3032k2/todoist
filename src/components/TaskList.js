@@ -6,44 +6,44 @@ import {
   query,
   where,
 } from "firebase/firestore/lite";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TimestampToDate } from "../utils/convertDate";
 import { db } from "../utils/firebaseConfig";
 import DeadlineStatus from "../utils/deadlineStatus";
 import ConfirmModal from "./ConfirmModal";
+import { getLocalStorageItem } from "../utils/handleLocalStorage";
 
 const TaskList = () => {
-  const user = JSON.parse(localStorage.getItem("todouser"));
+  const user = getLocalStorageItem("todouser");
   const navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
-  const [deleteTask, setDeleteTask] = useState(false);
   const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [deletedTaskID, setIsDeletedTaskID] = useState(null);
   const isEmpty = tasks.length === 0;
+  const getTasks = useCallback(async () => {
+    const data = [];
+    const q = query(
+      collection(db, "task"),
+      where("user", "==", doc(db, `user/${user.userId}`))
+    );
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      data.push({ id: doc.id, data: doc.data() });
+    });
+    setTasks(data);
+  }, []);
   useEffect(() => {
-    const getTasks = async () => {
-      const data = [];
-      const q = query(
-        collection(db, "task"),
-        where("user", "==", doc(db, `user/${user.userId}`))
-      );
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        data.push({ id: doc.id, data: doc.data() });
-      });
-      setTasks(data);
-    };
     getTasks();
-    return () => setDeleteTask(false);
-  }, [deleteTask]);
+  }, []);
+
   const handleEdit = (id) => {
     navigate(`/edittask/${id}`);
   };
   const handleDelete = async (id) => {
     try {
       await deleteDoc(doc(db, "task", id));
-      setDeleteTask(true);
+      getTasks();
       setIsShowConfirm(false);
     } catch (error) {
       throw error;
