@@ -1,0 +1,42 @@
+@media screen and (max-width: 768px) {
+  .home-page__content {
+    width: 88%;
+  }
+  .login-page__form {
+    width: 88%;
+  }
+  .form-content {
+    width: 88%;
+  }
+  .task-form {
+    width: 88%;
+  }
+  .confirm-modal {
+    width: 84%;
+  }
+}
+@media screen and (min-width: 430px) and (max-width: 576px) {
+  .login-page__form {
+    width: 70%;
+  }
+}
+@media screen and (min-width: 577px) and (max-width: 880px) {
+  .login-page__form {
+    width: 50%;
+  }
+  .confirm-modal {
+    width: 60%;
+  }
+}
+
+@media screen and (min-width: 1500px) {
+  .home-page__content {
+    width: 44%;
+  }
+  .task-form {
+    width: 40%;
+  }
+  .confirm-modal {
+    width: 34%;
+  }
+}
